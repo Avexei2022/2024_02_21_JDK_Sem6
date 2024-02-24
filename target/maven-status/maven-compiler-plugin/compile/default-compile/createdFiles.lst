@@ -1,0 +1,13 @@
+ru\gb\student\model\players\PlayersList.class
+ru\gb\student\model\players\Player.class
+ru\gb\student\model\repo\GetInfoFromFile.class
+ru\gb\student\view\ConsoleUI.class
+ru\gb\student\model\organizers\MontyHall.class
+ru\gb\student\view\View.class
+ru\gb\student\model\doors\DoorsArray.class
+ru\gb\student\model\players\FirstChoiceForAllPlayers.class
+ru\gb\student\model\Game.class
+ru\gb\student\Main.class
+ru\gb\student\model\doors\Door.class
+ru\gb\student\presenter\Presenter.class
+ru\gb\student\view\GUI.class

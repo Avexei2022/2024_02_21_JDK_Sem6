@@ -4,6 +4,10 @@ import ru.gb.student.presenter.Presenter;
 
 import javax.swing.*;
 import java.awt.*;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Графический интерфейс пользователя
@@ -41,7 +45,7 @@ public class GUI extends JFrame implements View {
         setTitle("Парадокс Монти Холла");
         createMainPanel();
         setVisible(true);
-
+        presenter.getTxtAboutGame();
     }
 
     /**
@@ -78,7 +82,6 @@ public class GUI extends JFrame implements View {
     private Component createInfoArea() {
         infoArea = new JTextArea();
         infoArea.setMargin(new Insets(10, 10, 10, 10));
-        infoArea.setText(getTxtAboutGame());
         infoArea.setLineWrap(true);
         infoArea.setWrapStyleWord(true);
         infoArea.setEditable(false);
@@ -111,21 +114,5 @@ public class GUI extends JFrame implements View {
         infoArea.append(info + "\n");
     }
 
-    /**
-     * Текстовая информация об игре
-     * пока в ткаом виде
-     * @return текст с информацией
-     */
-    private String getTxtAboutGame() {
-        return "\tЗадача формулируется как описание игры, основанной на американской телеигре «Let’s Make a Deal», " +
-                "и названа в честь продюсера и первого ведущего этой передачи Монти Холла.\n" +
-                "\tНаиболее распространённая формулировка этой задачи звучит следующим образом:\n" +
-                "\tПредставьте, что вы стали участником игры, в которой вам нужно выбрать одну из трёх дверей." +
-                "За одной из дверей находится автомобиль, за двумя другими дверями — козы.\n" +
-                "Вы выбираете одну из дверей, например, номер 1, после этого ведущий, " +
-                "который знает, где находится автомобиль, а где — козы, открывает одну из оставшихся дверей, " +
-                "например, номер 3, за которой находится коза. После этого он спрашивает вас — " +
-                "не желаете ли вы изменить свой выбор и выбрать дверь номер 2?\n" +
-                "\tУвеличатся ли ваши шансы выиграть автомобиль, если вы примете предложение ведущего и измените свой выбор?\n";
-    }
+
 }

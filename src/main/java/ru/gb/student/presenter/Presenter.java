@@ -1,6 +1,7 @@
 package ru.gb.student.presenter;
 
 import ru.gb.student.model.Game;
+import ru.gb.student.model.repo.GetInfoFromFile;
 import ru.gb.student.view.View;
 
 /**
@@ -39,4 +40,8 @@ public class Presenter {
         view.printInfo(info);
     }
 
+    public void getTxtAboutGame() {
+        String info = new GetInfoFromFile().getGameInfo();
+        view.printInfo(info);
+    }
 }
