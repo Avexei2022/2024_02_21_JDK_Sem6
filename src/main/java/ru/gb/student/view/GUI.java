@@ -5,6 +5,9 @@ import ru.gb.student.presenter.Presenter;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * Графический интерфейс пользователя
+ */
 public class GUI extends JFrame implements View {
 
     private final int frameWidth;
@@ -27,8 +30,10 @@ public class GUI extends JFrame implements View {
         setting();
     }
 
+    /**
+     * Установки основного окна
+     */
     private void setting() {
-
         setSize(frameWidth, frameHeight);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -39,11 +44,17 @@ public class GUI extends JFrame implements View {
 
     }
 
+    /**
+     * Добавление элементов в соновное окно
+     */
     private void createMainPanel() {
         add(createPanelTop(), BorderLayout.NORTH);
         add(createInfoArea(), BorderLayout.CENTER);
     }
 
+    /** Создание верхней панели
+     * @return верхняя панель
+     */
     private Component createPanelTop() {
 
         tfAmountOfRound = new JTextField();
@@ -60,6 +71,10 @@ public class GUI extends JFrame implements View {
         return panelTop;
     }
 
+    /**
+     * Создание Зоны вывода информации
+     * @return Зона вывода информации
+     */
     private Component createInfoArea() {
         infoArea = new JTextArea();
         infoArea.setMargin(new Insets(10, 10, 10, 10));
@@ -72,7 +87,11 @@ public class GUI extends JFrame implements View {
         return jScrollPane;
     }
 
-
+    /**
+     * Метод передачи презентеру информации о запуске программы
+     * с аргументами количества раундов
+     * и количества детализированных раундов
+     */
     private void run() {
         try {
             amountOfRound = Integer.parseInt(tfAmountOfRound.getText());
@@ -82,11 +101,21 @@ public class GUI extends JFrame implements View {
             printInfo("\nПроверьте введенные данные");
         }
     }
+
+    /**
+     * Вывод информации пользователю
+     * @param info
+     */
     @Override
     public void printInfo(String info) {
         infoArea.append(info + "\n");
     }
 
+    /**
+     * Текстовая информация об игре
+     * пока в ткаом виде
+     * @return текст с информацией
+     */
     private String getTxtAboutGame() {
         return "\tЗадача формулируется как описание игры, основанной на американской телеигре «Let’s Make a Deal», " +
                 "и названа в честь продюсера и первого ведущего этой передачи Монти Холла.\n" +

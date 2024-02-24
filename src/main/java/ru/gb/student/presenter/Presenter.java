@@ -3,6 +3,9 @@ package ru.gb.student.presenter;
 import ru.gb.student.model.Game;
 import ru.gb.student.view.View;
 
+/**
+ * Класс презентера
+ */
 public class Presenter {
     private final View view;
     private Game game;
@@ -11,6 +14,13 @@ public class Presenter {
         this.view = view;
     }
 
+    /**
+     * Метод начала игры
+     * Проверяются параметры количества раундов игры и количества детализированных раундов,
+     * полученных от пользователя
+     * @param amountOfRound  количество раундов игры
+     * @param amountOfRoundToShowDetail количество детализированных раундов
+     */
     public void run(int amountOfRound, int amountOfRoundToShowDetail) {
         if (amountOfRoundToShowDetail > amountOfRound) {
             amountOfRoundToShowDetail = amountOfRound;
@@ -21,6 +31,10 @@ public class Presenter {
         game.run(amountOfRound, amountOfRoundToShowDetail);
     }
 
+    /**
+     * Метод передачи информации пользователю
+     * @param info
+     */
     public void printInfo(String info) {
         view.printInfo(info);
     }

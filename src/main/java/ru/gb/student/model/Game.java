@@ -12,6 +12,17 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/**
+ * Класс игры - основной сервисный класс
+ * содержит:
+ * - ведущего - Монти Холл
+ * - список дверей
+ * - список игроков
+ * - первый выбор двери для всех игроков - уход от глобальной переменной
+ * - хранидище результатов игры
+ * - количество раундов, данные о которых необходимо получить с детальной информацией
+ *
+ */
 public class Game {
     private final MontyHall montyHall;
     private final DoorsArray doorsArray;
@@ -33,6 +44,11 @@ public class Game {
 
     }
 
+    /**
+     * Метод начала игры
+     * @param amountOfRound количество раундов
+     * @param amountOfRoundToShowDetail количество раундов с детализацией результатов
+     */
     public void run(int amountOfRound, int amountOfRoundToShowDetail) {
         this.amountOfRoundToShowDetail = amountOfRoundToShowDetail;
         setDoors();
@@ -44,24 +60,50 @@ public class Game {
         }
         showStat();
     }
+
+    /**
+     * Метод формирования списка дверей
+     * на данном этапе установлено 3 двери
+     */
     private void setDoors() {
         for (int i = 0; i < 3; i++) {
             doorsArray.addDoor(new Door());
         }
     }
 
+
+    /**
+     * Метод фомирования списка игроков
+     * с присвоением имени игрока
+     * На данном этапе 3 игрока
+     */
     private void setPlayersList() {
         for (int i = 0; i < 3; i++) {
             playersList.addPlayer(new Player("Игрок-" + (i+1)));
         }
     }
 
+    /**
+     * Метод подготовки хранилища результатов игры - HashMap
+     * ключ - Игрок
+     * значение - HashMap результатов раундов
+     */
     private void prepareStat() {
         for (Player player: playersList.getPlayers()) {
             stat.put(player, new HashMap<>());
         }
     }
 
+
+    /**
+     * Метод одного раунда игры:
+     * - ведущий прячет приз
+     * - игроки делают свой первый выбор
+     * - первый выбор установливается одинаковым для всех игроков
+     * - ведущий открывает дверь
+     * - игроки делают свой второй выбор
+     * @param numOfRound номер раунда для записи результатов
+     */
     private void startRound(int numOfRound) {
         montyHall.putPrize(doorsArray);
         firstChoiceForAllPlayers.setRndFirstChoice(doorsArray);
@@ -70,11 +112,21 @@ public class Game {
         getResultOfRound(numOfRound);
     }
 
+    /**
+     * Метод получения второго выбора игроков
+     */
     private void setFirstChoiceForAllPlayers() {
         for (int i = 0; i < playersList.getSize(); i++) {
             playersList.getPlayerByIndex(i).setFirstChoice(firstChoiceForAllPlayers.getRndFirstChoice());
         }
     }
+
+    /**
+     * Метод получения результатов раунда
+     * подготавливается информация о детализированном раунде о
+     * Результатах раунда
+     * @param numOfRound Номер раунда
+     */
     private void getResultOfRound(int numOfRound) {
         if (amountOfRoundToShowDetail > 0) printInfoAboutDoors(numOfRound);
         for (int i = 0; i < playersList.getSize(); i++) {
@@ -86,6 +138,11 @@ public class Game {
         if (amountOfRoundToShowDetail > 0) amountOfRoundToShowDetail--;
     }
 
+    /**
+     * Метод подготовки информации о состоянии дверей
+     * и передача информации презентеру
+     * @param numOfRound
+     */
     private void printInfoAboutDoors(int numOfRound) {
         presenter.printInfo("\nРаунд " + numOfRound);
         for (Door door: doorsArray.getDoors()) {
@@ -93,6 +150,12 @@ public class Game {
         }
     }
 
+    /**
+     * Метод подготовки детализированной инфомации о результатах раунда
+     * по каждому игроку
+     * и передача данной информации презентеру
+     * @param player Игрок
+     */
     private void printInfoAboutResult(Player player) {
         String string;
         if (doorsArray.findDoorByID(player.getSecondChoice()).isHasPrize()) {
@@ -103,11 +166,21 @@ public class Game {
                 + player.getSecondChoice() + " в результате "+ string);
     }
 
+    /**
+     * Метод записи результата раунда в хранилище
+     *
+     * @param player Игрок
+     * @param numOfRound номер раунда
+     */
     private void saveResultOfRound(Player player, int numOfRound) {
         stat.get(player).put(numOfRound
                 , doorsArray.findDoorByID(player.getSecondChoice()).isHasPrize());
     }
 
+
+    /** Метод подготвки итоговой информации по результатам всех раундов
+     * и передача информации презентеру
+     */
     private void showStat(){
         presenter.printInfo("\nИтог:");
         stat.forEach((k1, v1) -> {
@@ -127,6 +200,10 @@ public class Game {
         });
     }
 
+    /**
+     * Метод обнуления результатов раунда
+     * Все двери закрываются а приз удаляется
+     */
     private void clearResultPreviousRound() {
         doorsArray.getDoors().forEach(e -> {
             e.setHasPrize(false);
